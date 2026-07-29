@@ -1,0 +1,81 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+enum Tag {
+  ELECTRONICS
+  HOME
+  FASHION
+  SPORTS
+  BOOKS
+  TOYS
+  VEHICLES
+  SERVICES
+  PETS
+  OTHERS
+}
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id           Int      @id @default(autoincrement())
+  name         String
+  email        String   @unique
+  username     String   @unique
+  passwordHash String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  ads      Ad[]
+  comments Comment[]
+  likes    Like[]
+}
+
+model Ad {
+  id          Int       @id @default(autoincrement())
+  title       String
+  description String
+  price       Decimal   @db.Decimal(10, 2)
+  tags        Tag[]
+  imageUrl    String?
+  isPublished Boolean   @default(true)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  ownerId     Int
+  owner       User      @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  comments    Comment[]
+  likes       Like[]
+}
+
+model Comment {
+  id        Int      @id @default(autoincrement())
+  message   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  userId Int
+  adId   Int
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  ad   Ad   @relation(fields: [adId], references: [id], onDelete: Cascade)
+}
+
+model Like {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+
+  userId Int
+  adId   Int
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  ad   Ad   @relation(fields: [adId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, adId])
+}
