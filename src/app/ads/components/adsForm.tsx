@@ -2,6 +2,9 @@
 
 import { useActionState } from "react";
 import { AdsState } from "@/lib/ads/adsTypes";
+import Image from "next/image";
+import { useRef, useState } from "react";
+
 
 type AdFormProps = {
   action: (
@@ -12,6 +15,7 @@ type AdFormProps = {
   initialValues?: AdsState["values"];
    id?: number;
   submitText: string;
+  currentImage?: string | null;
 };
 
 const initialState: AdsState = {
@@ -27,12 +31,30 @@ const initialState: AdsState = {
 
 export default function AdsForm({
   action,
+  currentImage,
   initialValues,
   id,
   submitText,
 }: AdFormProps) {
 
     const [state, formAction, pending] = useActionState( action,initialState,);
+    const [preview, setPreview] = useState(currentImage);
+    const fileInputRef = useRef<HTMLInputElement>(null);
+
+    function handleImageChange(event: React.ChangeEvent<HTMLInputElement>) {
+    const file = event.target.files?.[0];
+
+    if (!file) return;
+        setPreview(URL.createObjectURL(file));
+    }
+
+    function handleCancelImage() {
+        setPreview(currentImage);
+
+        if (fileInputRef.current) {
+            fileInputRef.current.value = "";
+        }
+    }
 
     return (
     <form action={formAction}  className="mx-auto max-w-2xl space-y-6 rounded-2xl bg-white p-8 shadow-lg">
@@ -80,10 +102,31 @@ export default function AdsForm({
             <label htmlFor="imageUrl" className="mb-2 block font-medium text-rose-700">
                 Imagen
             </label>
+            {preview && (
+                <div className="mb-4 overflow-hidden rounded-lg border border-pink-300">
+                <Image
+                    src={preview}
+                    alt="Vista previa"
+                    width={700}
+                    height={500}
+                    className="h-64 w-full object-cover"
+                />
+                </div>
+            )}
 
-            <input id="image" name="image" type="file" accept="image/*"
+            <input ref={fileInputRef} id="image" name="image" type="file" accept="image/*" onChange={handleImageChange}
                className="w-full rounded-lg border border-pink-300 px-4 py-2 file:mr-4 file:rounded-lg file:border-0 file:bg-rose-500 file:px-4 file:py-2 file:font-medium file:text-white hover:file:bg-rose-600"
             />
+
+            {preview !== currentImage && (
+                <button
+                type="button"
+                onClick={handleCancelImage}
+                className="mt-3 rounded-lg border border-gray-300 px-4 py-2 text-sm hover:bg-gray-100"
+                >
+                Cancelar cambio
+                </button>
+            )}
 
             {state.errors.image?.map((error) => (
                 <p key={error} className="mt-1 text-sm text-red-500" >{error}</p>

@@ -1,4 +1,10 @@
+import { Metadata } from "next";
 import { SignupForm } from "./components/signup-form";
+
+export const metadata:Metadata  = {
+  title: "Crear cuenta | Wallapop Next",
+  description: "Regístrate para publicar anuncios.",
+};
 
 export default function SignupPage() {
   return (

@@ -1,4 +1,10 @@
+import { Metadata } from "next";
 import LoginForm from "./components/login-form";
+
+export const metadata:Metadata  = {
+  title: "Iniciar sesión | Wallapop Next",
+  description: "Accede a tu cuenta.",
+};
 
 export default function LoginPage() {
   return (

@@ -5,6 +5,7 @@ import { getAdById, updateAd } from "@/lib/ads/adsRepository";
 import { adSchema } from "@/lib/ads/adsSchema";
 import { AdsState } from "@/lib/ads/adsTypes";
 import { getSession } from "@/lib/auth/auth";
+import { deleteFile } from "@/lib/uploads/deleteFile";
 import { uploadImage } from "@/lib/uploads/uploadFile";
 import { revalidatePath } from "next/cache";
 import { notFound, redirect } from "next/navigation";
@@ -16,7 +17,7 @@ export async function updateAdAction(
   const errors: AdsState["errors"] = {};
 
   const image = formData.get("image") as File;
-
+  const imageChanged = image.size > 0;
   const values = {
     title: formData.get("title")?.toString() ?? "",
     description: formData.get("description")?.toString() ?? "",
@@ -89,6 +90,10 @@ export async function updateAdAction(
     imageUrl: imagePath,
     tags: data.tags as Tag[],
   });
+
+  if (imageChanged && ad.imageUrl) {
+    await deleteFile(ad.imageUrl);
+  }
 
   revalidatePath("/ads");
   revalidatePath(`/ads/${id}`);

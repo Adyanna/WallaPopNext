@@ -1,5 +1,13 @@
 import { findAds } from "@/lib/ads/adsRepository";
 import AdCard from "./components/adsCard";
+import EmptyState from "@/app/components/emptyState";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "WallaPop Next",
+  description: "Marketplace desarrollado con Next.js y TypeScript para la compra y venta de artículos.",
+};
+
 
 export default async function AdsPage() {
   const ads = await findAds();
@@ -17,9 +25,7 @@ export default async function AdsPage() {
     </div>
 
       {ads.length === 0 ? (
-        <p className="text-gray-500">
-          Todavía no existen anuncios.
-        </p>
+        <EmptyState title="No hay anuncios disponibles" description="Cuando alguien publique un anuncio aparecerá aquí."/>
       ) : (
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
           {ads.map((ad) => (
