@@ -14,12 +14,12 @@ export default function Navbar() {
         </Link>
 
         <nav className="hidden items-center gap-6 md:flex">
-          <Link
+          {/* <Link
             href="/ads"
             className="rounded-full px-4 py-2 text-sm font-medium text-rose-800 transition hover:bg-white/50"
           >
             Anuncios
-          </Link>
+          </Link> */}
 
           <Link
             href="/ads/new"

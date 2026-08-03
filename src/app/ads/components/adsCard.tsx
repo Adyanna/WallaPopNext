@@ -19,18 +19,12 @@ export default function AdCard({ ad }: AdCardProps) {
     <Link href={`/ads/${ad.id}`}>
       <article className="group overflow-hidden rounded-3xl border border-pink-200 bg-white shadow-md transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl">
         <div className="relative h-56 w-full overflow-hidden bg-gradient-to-br from-pink-100 via-rose-100 to-pink-200">
-          {ad.imageUrl ? (
             <Image
-              src={ad.imageUrl}
+              src={ad.imageUrl|| "/images/no-image.png"}
               alt={ad.title}
               fill
               className="object-cover transition duration-500 group-hover:scale-110"
             />
-          ) : (
-            <div className="flex h-full items-center justify-center text-7xl">
-              🌸
-            </div>
-          )}
         </div>
 
         <div className="space-y-4 p-5">

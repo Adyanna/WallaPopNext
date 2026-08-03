@@ -1,11 +1,40 @@
 import prisma from "@/lib/prisma";
 import { CreateAdsParams, UpdateAdsParams } from "./adsTypes";
+import { AdsQuery, ADS_PAGE_SIZE } from "./adsQuery";
+import { Tag } from "@/generated/prisma/enums";
 
-export async function findAds() {
+export async function findAds({ query, tag, order, page }: AdsQuery) {
+  const selectedTag =
+    tag && Object.values(Tag).includes(tag as Tag) ? (tag as Tag) : undefined;
+
   return prisma.ad.findMany({
     where: {
       isPublished: true,
+
+      ...(query && {
+        OR: [
+          {
+            title: {
+              contains: query,
+              mode: "insensitive",
+            },
+          },
+          {
+            description: {
+              contains: query,
+              mode: "insensitive",
+            },
+          },
+        ],
+      }),
+
+      ...(selectedTag && {
+        tags: {
+          has: selectedTag,
+        },
+      }),
     },
+
     include: {
       owner: {
         select: {
@@ -14,9 +43,10 @@ export async function findAds() {
         },
       },
     },
-    orderBy: {
-      createdAt: "desc",
-    },
+
+    orderBy: order === "asc" ? { createdAt: "asc" } : { createdAt: "desc" },
+    skip: (page - 1) * ADS_PAGE_SIZE,
+    take: ADS_PAGE_SIZE,
   });
 }
 
@@ -80,6 +110,43 @@ export async function deleteAd(id: number) {
   return prisma.ad.delete({
     where: {
       id,
+    },
+  });
+}
+
+export async function countAds({
+  query,
+  tag,
+}: Pick<AdsQuery, "query" | "tag">) {
+  const selectedTag =
+    tag && Object.values(Tag).includes(tag as Tag) ? (tag as Tag) : undefined;
+
+  return prisma.ad.count({
+    where: {
+      isPublished: true,
+
+      ...(query && {
+        OR: [
+          {
+            title: {
+              contains: query,
+              mode: "insensitive",
+            },
+          },
+          {
+            description: {
+              contains: query,
+              mode: "insensitive",
+            },
+          },
+        ],
+      }),
+
+      ...(selectedTag && {
+        tags: {
+          has: selectedTag,
+        },
+      }),
     },
   });
 }

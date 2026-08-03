@@ -56,13 +56,13 @@ export default function LikeButton({
       type="button"
       disabled={!canLike || isPending}
       onClick={handleLike}
-      className="flex items-center gap-2 rounded-lg border px-4 py-2 transition hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-50"
+      className="group flex items-center gap-2 rounded-full border border-rose-200 bg-white px-5 py-2 shadow-sm transition hover:border-rose-400 hover:shadow-md disabled:opacity-50"
     >
-      <span className="text-xl">
-        {optimisticLike.liked ? "❤️" : "🤍"}
-      </span>
+    <span  className={`text-2xl transition-transform duration-200 
+      ${optimisticLike.liked? "scale-110": "group-hover:scale-110"}`}>{optimisticLike.liked ? "❤️" : "🤍"}
+    </span>
 
-      <span>{optimisticLike.total}</span>
+    <span className="font-semibold text-gray-700">{optimisticLike.total}</span>
     </button>
   );
 }

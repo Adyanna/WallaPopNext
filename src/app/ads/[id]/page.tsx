@@ -103,14 +103,12 @@ export default async function AdDetailPage({ params}: Props) {
               ))}
             </div>
           </div>
-
           <LikeButton
               adId={ad.id}
               initialLiked={liked}
               initialTotal={likes}
               canLike={!!session}
             />
-
           <div className="mt-auto rounded-xl border border-rose-200 bg-rose-50 p-5">
             <p className="text-sm text-gray-500">
               Publicado por
