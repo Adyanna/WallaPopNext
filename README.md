@@ -1,36 +1,149 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🛍️ Wallapop Next
 
-## Getting Started
+Marketplace desarrollado con **Next.js 16**, **React**, **TypeScript** y **Prisma ORM** como práctica de React Avanzado.
 
-First, run the development server:
+La aplicación permite a los usuarios publicar anuncios, explorar productos, dar "Me gusta", comentar publicaciones y administrar sus propios anuncios.
+
+---
+
+# 🚀 Funcionalidades
+
+- Registro e inicio de sesión de usuarios
+- Publicación de anuncios con imágenes
+- Edición y eliminación de anuncios propios
+- Catálogo de anuncios
+- Búsqueda por texto
+- Filtrado por categorías
+- Ordenamiento de resultados
+- Paginación
+- Sistema de comentarios
+- Sistema de "Me gusta"
+- Subida de imágenes
+- Seed de datos para pruebas
+
+---
+
+# 🧠 Tecnologías
+
+- Next.js 16
+- React 19
+- TypeScript
+- Prisma ORM
+- PostgreSQL
+- Tailwind CSS
+- Zod
+- Vitest
+- Playwright
+
+---
+
+# 🏗️ Arquitectura
+
+El proyecto sigue la estructura recomendada por **Next.js App Router**, separando la lógica en diferentes módulos:
+
+- App Router
+- Server Actions
+- Prisma ORM
+- Componentes reutilizables
+- Validaciones con Zod
+
+---
+
+# 📦 Instalación del proyecto
+
+## 1. Clonar el repositorio
+
+```bash
+git clone https://github.com/Adyanna/WallaPopNext.git
+```
+
+---
+
+## 2. Instalar dependencias
+
+```bash
+npm install
+```
+
+---
+
+## 3. Configurar las variables de entorno
+
+Crear un archivo `.env` utilizando como referencia el archivo `.env.example`.
+
+Configurar principalmente:
+
+- DATABASE_URL
+- AUTH_SECRET
+
+---
+
+## 4. Ejecutar las migraciones
+
+```bash
+npx prisma migrate dev
+```
+
+Generar el cliente de Prisma:
+
+```bash
+npx prisma generate
+```
+
+---
+
+## 5. Poblar la base de datos
+
+```bash
+npx prisma seed
+```
+
+Este comando creará usuarios, anuncios, comentarios y "Me gusta" de ejemplo para facilitar las pruebas.
+
+---
+
+## 6. Ejecutar la aplicación
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+# 🧪 Ejecutar pruebas
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Tests unitarios con Vitest:
 
-## Learn More
+```bash
+npm run test
+```
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# 📌 Funcionalidades principales
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Usuarios
 
-## Deploy on Vercel
+- Registro
+- Inicio de sesión
+- Cierre de sesión
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Anuncios
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Crear anuncio
+- Editar anuncio
+- Eliminar anuncio
+- Buscar anuncios
+- Filtrar anuncios
+- Paginación
+
+## Interacción
+
+- Dar y quitar "Me gusta"
+- Comentar anuncios
+
+---
+
+# 👩‍💻 Autor
+
+Desarrollado por **Milka Cutipa** como práctica de **React Avanzado** utilizando **Next.js**, **TypeScript**, **Prisma ORM** y **PostgreSQL**.
