@@ -81,7 +81,7 @@ Configurar principalmente:
 ## 4. Ejecutar las migraciones
 
 ```bash
-npx prisma migrate dev
+npx prisma migrate dev --name init
 ```
 
 Generar el cliente de Prisma:
@@ -95,7 +95,7 @@ npx prisma generate
 ## 5. Poblar la base de datos
 
 ```bash
-npx prisma seed
+npm prisma seed
 ```
 
 Este comando creará usuarios, anuncios, comentarios y "Me gusta" de ejemplo para facilitar las pruebas.
